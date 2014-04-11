@@ -1,45 +1,8 @@
-Python, Flask, SQLAlchemy, gunicorn and gevent  
-============
+# Origiart
 
-Rewrite of the application in python (my native tongue) has begun, using the awesome Flask microframework
-
-Instructions
-------------
-
-First, you'll need to clone the repo.
+The first Flask project I ever worked on: a website I worked on in 2012 with Max Veggerberg and Joe McMahon. Still live on Heroku: 
+![screenshot 2014-04-10 20 16 56](https://cloud.githubusercontent.com/assets/446889/2675095/c625f4ba-c10e-11e3-9726-d428715010a5.png)
+![screenshot 2014-04-10 20 18 33](https://cloud.githubusercontent.com/assets/446889/2675098/da16c850-c10e-11e3-9647-3e7766639d33.png)
 
 
-Second, download `pip` and `virtualenv`
-
-    $ sudo easy_install pip
-    $ sudo pip install virtualenv
-
-Optionally, install `foreman` and `heroku` Ruby Gems
-
-    $ sudo gem install foreman heroku
-
-
-
-
-
-Now, you can setup an isolated environment with `virtualenv`.
-
-    $ virtualenv --no-site-packages env
-    $ source env/bin/activate
-
-On ubuntu, install the necessary packages:
-	$sudo apt-get install python-dev 
-
-Next, install the requirements in your isolated python environment.
-
-    $ pip install -r requirements.txt
-
-
-
-Now, you can run the application locally.
-
-    $ python run.py
-
-You can also run it using the production server if you install `libevent-dev` and `foreman`, but I am leaving that for another day, it also is difficult in Windows
-
-    $ foreman start
+[Origiart](http://origiart.herokuapp.com/home)
