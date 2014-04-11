@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% set PAGENAME = "Upload" %}
+{% block maincontent%}
+{% block js %}
+{{ super() }}
+<script>
+      $(document).ready(function() {
+          var currentFragment = 1;
+          var nextFrag = function() {};
+          var prevFrag = function() {};
+      });
+</script>
+{% endblock %}
+<div class="content">
+    <div class="container">
+        <div class="page-header">
+            <h1>
+                Upload Artwork
+            </h1>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <h2>
+                    Complete the story
+                </h2>
+                <p>
+                    This is your chance to inform collectors about your artwork, where you
+                    got inspiration for it, and other important details about it.
+                </p>
+            </div>
+            <div class="span9">
+                <form class="form-horizontal well" action="" method="POST" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>
+                            Enter artwork details
+                        </legend>
+                        {% if errors %}
+                        <div class='row7'>
+                            <div class='center temp-alert alert alert-info'>
+                                {% for error in errors %}
+                                <strong>
+                                    {{error}}
+                                </strong>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="control-group">
+                            <label class="control-label" for="normalSelect">
+                                Title
+                            </label>
+                            <div class="controls">
+                                <input class="input-xlarge" id="" name="title" value="" type="text" />
+                                <p class="help-block">
+                                    Enter the title of your piece. For example, "A Day in the Woods", "Untitled".
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="prependedInput">
+                                Price
+                            </label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        USD
+                                    </span>
+                                    <input style="width:234px;" id="prependedInput" name="cost" size="16"
+                                    value="" type="text" />
+                                </div>
+                                <p class="help-block">
+                                    Enter the price of your piece.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="fileInput">
+                                Upload your pictures
+                            </label>
+                            <div class="controls">
+                                <input id="fileInput" name="artImage" type="file" />
+                                <p class="help-block">
+                                    Choose up to 5 photos of your piece.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="normalSelect">
+                                Description
+                            </label>
+                            <div class="controls">
+                                <textarea class="input-xlarge" name="description" id="textarea" rows="3">
+                                </textarea>
+                                <p class="help-block">
+                                    Enter your decription of your piece, this is a good opportunity for collectors
+                                    to understand more about your unique perspective.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="normalSelect">
+                                Tags
+                            </label>
+                            <div class="controls">
+                                <input class="input-xlarge" id="" name="tags" value="" type="text" />
+                                <p class="help-block">
+                                    Enter as many tags for your piece as you would like. This will help collectors
+                                    find your piece.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="normalSelect">
+                                Type
+                            </label>
+                            <div class="controls">
+                                <select style="width:281px;" name="type" id="normalSelect">
+                                    <option>
+                                    </option>
+                                    {% for type in types %}
+                                    <option value="{{type.id}}">
+                                        {{type.name}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <p class="help-block">
+                                    Select what type of artwork your piece is.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" id="optionsRadio">
+                                Medium
+                            </label>
+                            <div class="controls">
+                                {% for medium in mediums%}
+                                <label class="radio">
+                                    <input type="radio" name="medium" value="{{medium.id}}" />
+                                    <span>
+                                        {{medium.name}}
+                                    </span>
+                                </label>
+                                {% endfor %}
+                                <p class="help-block">
+                                    Select the medium you used for your piece.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="normalSelect">
+                                Support type
+                            </label>
+                            <div class="controls">
+                                <select style="width:281px;" name="support_type" id="normalSelect">
+                                    <option>
+                                    </option>
+                                    {% for support in supports %}
+                                    <option value="{{support.id}}">
+                                        {{support.name}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <p class="help-block">
+                                    Select the support type your artwork is on.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="normalSelect">
+                                Style
+                            </label>
+                            <div class="controls">
+                                <select style="width:281px;" name="style" id="normalSelect">
+                                    <option>
+                                    </option>
+                                    {% for style in styles %}
+                                    <option value="{{style.id}}">
+                                        {{style.name}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <p class="help-block">
+                                    Select the style in which you created your piece.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="prependedInput">
+                                Width
+                            </label>
+                            <div class="controls">
+                                <div class="input-append">
+                                    <input style="width:223px;" id="prependedInput" name="width" value=""
+                                    size="16" type="text" />
+                                    <span class="add-on">
+                                        inches
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="prependedInput">
+                                Height
+                            </label>
+                            <div class="controls">
+                                <div class="input-append">
+                                    <input style="width:223px;" id="prependedInput" name="height" value=""
+                                    size="16" type="text" />
+                                    <span class="add-on">
+                                        inches
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="normalSelect">
+                                Is your work framed?
+                            </label>
+                            <div class="controls">
+                                <select style="width:281px;" name="framed" id="normalSelect">
+                                    <option>
+                                    </option>
+                                    <option value="1">
+                                        Yes
+                                    </option>
+                                    <option value="0">
+                                        No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" action="" name="submit" class="btn btn-primary" value="Upload"
+                            />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- end main span -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- end content div -->
+{% endblock %}

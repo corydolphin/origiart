@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% set PAGENAME = 'Account'%}
+{% block js %}
+{{ super() }}
+<script type="text/javascript" src={{url_static(filename='js/jquery.form.js')}}></script>
+<script type="text/javascript">
+	$(function(){
+		$('input[type=file]').change(function(e){
+		    if (this.files && this.files[0]) 
+		    {
+		        var reader = new FileReader();
+		        reader.onload = function (oe) {
+		            $('#fileUploadClickable').attr('src', oe.target.result);
+		        };
+		        reader.readAsDataURL(this.files[0]);
+		    }
+		});
+
+	  	$('#fileUploadClickable').click(function(){
+    		$('#uploadTempImage').click();
+  	  	});
+
+	});
+</script>
+
+{% endblock %}
+{% block maincontent %}
+<div class="content">
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				My Account
+			</h1>
+		</div>
+		{% with errors = get_flashed_messages(category_filter=["error"]) %}
+			{% if errors %}
+			<div class='row7'>
+
+	            {% for error in errors %}
+	          <div class='center temp-alert alert alert-message fade in'>
+	            	<strong>{{error}}</strong>
+	          </div>
+	            {% endfor %}
+
+	        </div>
+			{% endif %}
+		{% endwith %}
+		{% with messages = get_flashed_messages(category_filter=["message"]) %}
+			{% if messages %}
+			<div class='row7'>
+	            {% for message in messages %}
+	          <div class='center temp-alert alert alert-info'>
+	            	<strong>{{message}}</strong>
+	          </div>
+	            {% endfor %}
+	        </div>
+			{% endif %}
+		{% endwith %}
+		<form class="form-horizontal well" action="" method="POST" enctype="multipart/form-data">
+			<input id="uploadTempImage" type="file" name="updatedProfileImage" style="display:none">
+	        {{ form.csrf_token }}
+	        <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="fileUpload">Profile Picture</label>
+                    <div class="controls">
+            			<img class="span3 thumbnail" id="fileUploadClickable" src={{current_user.imageThumb}} style="cursor: hand; cursor: pointer;width:220px; height:180px;"/>
+                    </div>
+                </div>
+				<div class="control-group">
+                    <label class="control-label" for="normalSelect">
+                        Description
+                    </label>
+                    <div class="controls">
+                        <textarea class="input-xlarge" name="description" id="textarea" rows="3">{{current_user.description or ''}}</textarea>
+                        <p class="help-block">Tell your life story. Or something</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="normalSelect">
+                        Slogan
+                    </label>
+                    <div class="controls">
+                        <textarea class="input-xlarge" name="slogan" id="textarea" rows="1">{{current_user.slogan or ''}}</textarea>
+                        <p class="help-block">Say a word. Or two.</p>
+                    </div>
+                </div>
+	        </fieldset>
+
+	        {% if not current_user.is_oauth_user %}
+	            <hr>
+			    <fieldset class="control-group">
+		          <label for="current_password" class="control-label">Current password</label>
+		          <div class="controls">
+		            <input id="current_password" type="password" name="current_password">
+		            <p>
+		              <a href="/account/resend_password" id="forgot_password">Forgot your password?</a>
+		              <span id="reminder_sent" style="visibility: hidden">Reminder sent!</span>
+		            </p>
+		          </div>
+		        </fieldset>
+		        <fieldset class="control-group">
+		          <label for="user_password" class="control-label">New password</label>
+		          <div id="password_strength" class="controls">
+		            <input id="user_password" type="password" name="user_password">
+		            <small id="password_strength_feedback" class="help-inline help-error" style="display: none;"></small>
+		          </div>
+		        </fieldset>
+		        <fieldset class="control-group">
+		          <label for="user_password_confirmation" class="control-label">Verify password</label>
+		          <div class="controls">
+		            <input id="user_password_confirmation" type="password" name="user_password_confirmation">
+		            <small id="password_match" class="help-inline help-error" style="display: none;">Passwords don't match</small>
+		          </div>
+		        </fieldset>
+			{% endif %}
+	          	<div class="form-actions">
+		            <button action="" type="submit" class="btn btn-primary">Save changes</button>
+		            <button class="btn">Cancel</button>
+	          	</div>
+		      </form>
+
+
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% set PAGENAME = 'Artists'%}
+{% block maincontent %}
+<div class="content" style="position:relative;">
+
+	{% for artist in artists %}
+			<div class="row">
+				<div class="span12">
+					<ul class="thumbnails">
+						<li>
+							<a class="thumbnail artist-thumbnail" href={{artist.link}}>
+								<img src={{artist.imageThumb}} alt={{artist.username}}/>
+								<div class="caption">
+									{{artist.displayName}}
+								</div>
+							</a>
+						</li>
+						{% for art in artist.artworks %}
+							<li class="span2">
+								<a class="thumbnail art-thumbnail" href={{art.link}}>
+									<img src={{art.imageThumb}} alt=""/>
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+	{% endfor %}
+</div>
+{% endblock %}
+

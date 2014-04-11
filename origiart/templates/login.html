@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% set PAGENAME = 'Login'%}
+{% block js %}
+    {{ super() }}
+    <script>
+         window.fbAsyncInit = function() {
+         	FB.init({
+	            appId      : {{config.FACEBOOK_APP_ID}},
+	            status     : true, 
+	            cookie     : true,
+	            xfbml      : true,
+	            oauth      : true,
+          	});
+	        FB.Event.subscribe('auth.login', function(response) {
+			    window.location.reload();
+			    console.log('login'); 
+			});
+
+			FB.Event.subscribe('auth.logout', function(response) {
+			    //window.location.reload();
+			    console.log('logout'); 
+			});
+
+			FB.Event.subscribe('auth.statusChange', function(response) {
+				console.log(response);
+			 	FB.api('/me', function(me){console.log(me.name)});
+            });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+{% endblock %}
+{%block title %} Login {% endblock %}  {# TODO: this is not being inherited correctly...  #}
+{% block maincontent %}
+<div class="content">
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				{{PAGENAME}}
+			</h1>
+
+		</div>
+		<div class="row">
+			<div class="span8 offset2">
+			{% with errors = get_flashed_messages(category_filter=["login_error"]) %}
+				{% if errors %}
+				<div class='row7'>
+	            	{% for error in errors %}
+					<div class='alert-message alert fade in' data-alert='alert'>
+						<a class='close' href='#'>&times;</a>
+						<p>{{error}}</p>
+					</div>
+	            	{% endfor %}
+		        </div>
+				{% endif %}
+			{% endwith %}
+
+				<form name="loginForm" class="form-inline well" action="" method="POST">
+					<legend>Login</legend>
+					<div class="control-group">
+						<input class="span2" id="" name="login_username" type="text" placeholder="Username/Email"/>
+						<input class="span2" id="" name="login_password" type="password" placeholder="Password"/>
+						<input type="submit" class="btn btn-primary" name="login" value="Log In"/>
+					    <div class="fb-login-button" scope="email" >Login with Facebook</div>
+					</div>
+					<p class="forgot">
+						<a href="#">
+							Forgot password?
+						</a>
+					</p>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span12">
+				<h1 class="login-or">
+					or 
+				</h1>
+
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="span8 offset2">
+			{% with errors = get_flashed_messages(category_filter=["register_error"]) %}
+				{% if errors %}
+				<div class='row7'>
+	            	{% for error in errors %}
+					<div class='alert-message alert fade in' data-alert='alert'>
+						<a class='close' href='#'>&times;</a>
+						<p>{{error}}</p>
+					</div>
+	            	{% endfor %}
+		        </div>
+				{% endif %}
+			{% endwith %}
+				<form class="form-inline well" action="" method="POST">
+					<legend>Join now</legend>
+					<div class="control-group">
+						<div class="input">
+							<input class="span2" id="" name="reg_email" value="" type="text" placeholder="Email"/>
+							<input class="span2" id="" name="reg_username" value="" type="text" placeholder="Username"/>
+							<input class="span2" id="" name="reg_password" type="password" placeholder="Password"/>
+							<input type="submit" action="" name="register" class="btn btn-primary" value="Join Now"/>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="fb-root"></div>
+{% endblock %}

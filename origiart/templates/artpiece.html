@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% set PAGENAME = artpiece.name%}
+{% block maincontent %}
+<div class="content">
+	<div class="row-fluid">
+		<div class="span3">
+			FILLER
+		</div>
+		<div class="span6">
+			<a href={{artpiece.imageOriginal}}>
+			<img src={{artpiece.imageArt}}>
+			</a>
+		</div>
+		<div class="span3">
+			<div class="row-fluid">
+				<div class="span12">
+					{{artpiece.name}}
+					<a href={{artpiece.user.link}}>
+					{{artpiece.user.displayName}}
+					</a>
+					<p>
+						{{artpiece.typeName | title}}
+					</p>
+					<p>
+						{{artpiece.description}}
+					</p>
+					<h3>Specifications</h3>
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>
+									Medium:
+								</th>
+								<th>
+									{{artpiece.mediumName | title}}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>
+									Support Type:
+								</th>
+								<td>
+									{{artpiece.supportTypeName | title}}
+								</td>
+							</tr>
+							<tr>
+								<th>Style:</th>
+								<td>{{artpiece.styleName | title}}</td>
+							</tr>
+								<!-- In the future.. <tr>
+								<th>Tags:</th>
+								<td>abstract painting, energetic modern, contemporary fine art, expressionism, modern wall decor, spheres circles</td>
+								</tr>-->
+							<tr>
+								<th>
+									Height:
+								</th>
+								<td>
+									{{artpiece.height}} inches
+								</td>
+							</tr>
+							<tr>
+								<th>
+									Width:
+								</th>
+								<td>
+									{{artpiece.width}} inches
+								</td>
+							</tr>
+							<tr>
+								<th>
+									Framed:
+								</th>
+								<td>
+									{% if artpiece.framed %}
+										Yes
+									{% else %}
+										No
+									{% endif %}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<button class="btn btn-success">
+						<i class="icon-shopping-cart"></i>
+						&nbsp;Add to Cart
+					</button>
+					<button class="btn btn-primary">
+						<i class="icon-star"></i>
+						&nbsp;Favorite
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			More by 
+			<a href={{artpiece.user.link}}>
+				{{artpiece.user.displayName | title}}
+			</a>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			{% for art in artpiece.user.artworks %}
+				<a href={{art.link}}>
+					<img src={{art.imageThumb}} alt=""/>
+				</a>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+

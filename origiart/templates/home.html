@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% set PAGENAME = 'Home'%}
+{% block js %}
+    {{ super() }}
+    <script language="javascript" type="text/javascript" src={{ url_for('static',filename='js/jquery.slidingGallery-1.2.min.js')}}></script>
+	<script language="javascript" type="text/javascript">
+	$(function() {
+		$('div.gallery img').slidingGallery({
+			container: $('div.gallery')
+		});
+	});
+	</script>
+{% endblock %}
+{% block maincontent %}
+<header>
+	<div class="gallery">
+		<img class="start" src="{{recentArtwork[0].imageSlider}}" alt="{{recentArtwork[0].name}}"/>
+
+		{% for art in recentArtwork[1:] %}
+				<img src="{{art.imageSlider}}" alt="{{art.name| default}}"/>
+		{% endfor %}
+
+	</div>
+</header>
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="span3 offset1">
+				<img style="padding-top:26px;" src="{{ url_for('static',filename='img/HalfOriginal.png')}}" alt="" />
+			</div>
+			<div class="span6 offset1">
+				<h1>
+					A market for original artwork
+				</h1>
+				<p class="large">
+					OrigiArt allows any artist to exhibit artwork online on their terms. Our relationships with 
+					local galleries can facilitate their interest in your personal style. Special contests 
+					are offered for college students.
+				</p>
+			</div>
+		</div>
+		<hr/>
+		<div class="row">
+			<div class="span5 offset1">
+				<div class="row info-block">
+					<div class="span1">
+						<i class="icon-user home-page-icon pull-right"></i>
+					</div>
+					<div class="span4">
+						<h3>
+							Exclusively student artists
+						</h3>
+						<p>
+							From the classroom studio delivered straight to your home.
+						</p>
+						<p>
+							Our artwork is hand picked by members of each of our colleges, ensuring it is 
+							authentic and of the highest quality.
+						</p>
+					</div>
+				</div>
+				<div class="row info-block">
+					<div class="span1">
+						<i class="icon-check home-page-icon pull-right"></i>
+					</div>
+					<div class="span4">
+						<h3>
+							100% Guaranteed <span class="orange">FREE</span> returns
+						</h3>
+						<p>
+							We want you to enjoy the artwork in your own home.
+						</p>
+						<p>
+							Buy it, check it out for one week, and if you want to return it, we will give you a 100% refund and cover shipping.
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span1">
+						<i class="icon-pencil home-page-icon pull-right"></i>
+					</div>
+					<div class="span4">
+						<h3>
+							Support art
+						</h3>
+						<p>
+							Help a starving student artist.
+						</p>
+						<p>
+							Fund the arts in your community.
+						</p>
+						<p>
+							Oh, and it is a bargain on beautiful Original artwork.
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span5">
+						<a href={{url_for('browse')}} class="btn btn-large pull-right">
+							<i class="icon-search"></i>
+							Browse Artwork
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="span5">
+				<div class="row info-block">
+					<div class="span1">
+						<i class="icon-trophy home-page-icon pull-right"></i>
+					</div>
+					<div class="span4">
+						<h3>
+							Your artwork, your money
+						</h3>
+						<p>
+							We offer the most competitive deals to artists anywhere.
+						</p>
+					</div>
+				</div>
+				<div class="row info-block">
+					<div class="span1">
+						<i class="icon-bar-chart home-page-icon pull-right"></i>
+					</div>
+					<div class="span4">
+						<h3>
+							Jumpstart your career
+						</h3>
+						<p>
+							We will connect you to local galleries and showings that match your style and preference.
+						</p>
+						<p>
+							Establish relationships with your fans.
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span1">
+						<i class="icon-thumbs-up home-page-icon pull-right"></i>
+					</div>
+					<div class="span4">
+						<h3>
+							We support you
+						</h3>
+						<p>
+							You care about your artwork. We care about good storage, safe shipping, and customer service.
+						</p>
+						<p>
+							We are always here for you. <strong class="orange">Always</strong>. 1-339-227-2818.
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span5">
+						<a href={{url_for('login')}} class="btn btn-large pull-right">
+							Join Now
+							<i class="icon-chevron-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% set PAGENAME = 'Browse'%}
+{% block maincontent %}
+<div class="content" style="position:relative;">
+	<div class="row" style="padding-left:240px;">
+		<p class="pull-left">
+			Showing {{numArts}} results
+		</p>
+		<p class="pull-right">
+			Sort by 
+			<select id="select01">
+				<option>Recently Added	</option>
+				<option>Popular Artists</option>
+				<option>Lowest Price</option>
+				<option>Highest Price</option>
+			</select>
+		</p>
+	</div>
+	<div class="row" style="padding-left:240px;">
+		{% for art in artwork %}
+			<div class="pull-left" style="margin-right:20px;text-align:center;color:#666666;">
+				<a href={{art.link}} >
+					<img src={{art.imageThumb}} alt=""/>
+				</a>
+				<p>{{art.name}}</p>
+				<p><a href={{art.user.link}}>{{art.user.displayName}}</a></p>
+			</div>
+		{% endfor %}
+	</div>
+	<div style="position:absolute;left:20px;top:20px;width:200px;" class="well">
+		<h3>
+			Browse Artwork
+		</h3>
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Type
+			</li>
+			{% for type in types%}
+				<li {% if type.id == filterType%} class='active' {% endif %}>
+					<a href={{url_for('browse',type=type.id)}} >
+						{{type.name|title}}
+					</a>
+				</li>
+			{% endfor %}
+			<li class="nav-header">
+				Medium
+			</li>
+			{% for medium in mediums%}
+				<li {% if medium.id == filterMedium%} class='active' {% endif %}>
+					<a href={{url_for('browse',medium=medium.id)}}>{{medium.name|title}}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}
+

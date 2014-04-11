@@ -1,0 +1,133 @@
+{% block header %}
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+        <meta content='OrigiArt is an online marketplace for original student artwork.'
+        name='description' />
+        <title>
+            {{PAGENAME}} | Origiart
+        </title>
+        <meta name="author" content="">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+            </script>
+        <![endif]-->
+        {% block css %}
+        <link href={{ url_static(filename='css/bootstrap.min.css')}} rel="stylesheet">
+        <link href={{ url_static(filename='css/style.css' )}} rel="stylesheet">
+        <link href={{ url_static(filename='css/font-awesome.css' )}} rel="stylesheet">
+        <link rel="shortcut icon" href={{ url_static(filename='img/favicon.ico')}}>
+        {% endblock %}
+    </head>
+    
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container full">
+                    <a class="brand" href={{url_for( 'home')}} title="Original Student Artwork"><img src={{url_static(filename='img/QuarterAllBlack.png')}} alt="" /></a>
+                    <ul class="nav">
+                        <li {% if PAGENAME=="Home" %} class="active" {% endif %}>
+                            <a href={{url_for( 'home')}} title="Original Student Artwork">Home</a>
+                        </li>
+                        <li {% if PAGENAME=="Browse" %}class="active" {% endif %}>
+                            <a href={{url_for( 'browse')}} title="Browse Artwork">Artwork</a>
+                        </li>
+                        <li {% if PAGENAME=="Artists" %}class="active" {% endif %}>
+                            <a href={{url_for( 'artists')}} title="Browse Artists">Artists</a>
+                        </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li {% if PAGENAME=="ShoppingCart" %} class="active" {% endif %}>
+                            <a href={{url_for( 'shoppingCart')}} title="Shopping Cart (0)"><i class="icon-shopping-cart"></i>Shopping Cart (0)</a>
+                        </li>
+                        {% if current_user.is_authenticated() %}
+                        <li class='dropdown'>
+                            <a href="#" class='dropdown-toggle' data-toggle='dropdown' title={{current_user.username}}>{{current_user.username}}<i class="icon-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href={{url_for( 'account')}} title='My Account'>My Account</a>
+                                </li>
+                                <li>
+                                    <a href={{url_for( 'upload')}} title='Upload Artwork'>Upload Artwork</a>
+                                </li>
+                                {% if current_user.is_admin %}
+                                <li>
+                                    <a href={{url_for( 'admin')}} title='Admin Panel'>Admin Panel</a>
+                                <li>
+                                {% endif %}
+                                <li class='divider'></li>
+                                <li><a href={{url_for( 'logout')}} title='Log Out'>Log Out</a></li>
+                            </ul>
+                            </li>
+                        {% endif %}
+                         {% if not current_user.is_authenticated() and PAGENAME=="Login" %}
+                        <li class="active">
+                            <a href={{url_for( 'login')}} title='Log In'>Log In<i class='icon-chevron-right'></i></a>
+                        </li>
+                        {% elif not current_user.is_authenticated() and PAGENAME !="Login" %}
+                        <li>
+                            <a href={{url_for( 'login')}} title='Log In'>Log In<i class='icon-chevron-right'></i></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endblock %} {% block maincontent %}{% endblock %} {% block footer %}
+        <div class="footer1 content">
+            <div class="row">
+                <div class="span2 full-left">
+                    <h4>
+                        OrigiArt
+                    </h4>
+                    <ul class="unstyled">
+                        <li>
+                            <a href={{url_for( 'index')}}>Home</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span2">
+                    <h4>Company</h4>
+                    <ul class="unstyled">
+                        <li><a href={{url_for( 'about')}}>About Us</a></li>
+                        <li><a href={{url_for( 'contact')}}>Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer2 content">
+            <div class="row">
+                <div class="span6">
+                    <h2>1-339-227-2818</h2>
+                    <p class="copyright">&copy;<a href={{url_for( 'index')}}>OrigiArt</a>2012</p>
+                </div>
+                <div class="span6 pull-right">
+                    <h3 class="pull-right social-icons">
+                        Stay in touch:
+                        <a href="//twitter.com/#!/OrigiArt" class="social-icon">
+					<i class="icon-twitter-sign icon-large social-icon"></i>
+				</a>
+                        <a href="//www.facebook.com/pages/OrigiArt/374333815914075" class="social-icon">
+					<i class="icon-facebook-sign icon-large social-icon"></i>
+				</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </body>
+    {% block js %}
+    <!-- Grab Google CDN's jQuery UI, with a protocol relative URL; fall back to local if offline -->
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src={{ url_static(filename="js/jquery.min.js" )}}><\/script>')</script>
+<script type="text/javascript" src="///ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script>window.jQuery.ui || document.write('<script src={{ url_static(filename="js/jquery-ui.min.js" )}}><\/script>')</script>
+    <script src={{ url_static(filename='js/bootstrap-dropdown.js' )}}>
+    </script>
+    <script src={{ url_static(filename='js/bootstrap-alert.js' )}}>
+    </script>
+    {% endblock %}
+
+</html>
+{% endblock %}

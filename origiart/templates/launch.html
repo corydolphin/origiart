@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+		<meta content='OrigiArt is an online marketplace for original student artwork.' name='description' />
+		<title>
+			Original Student Artwork | OrigiArt
+		</title>
+		<meta name="author" content="">
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href={{ url_static(filename='css/bootstrap.min.css') }} rel="stylesheet">
+		<link href={{ url_static(filename='css/style.css')}} rel="stylesheet">
+		<link href={{ url_static(filename='css/font-awesome.css')}} rel="stylesheet">
+		<link href={{ url_static(filename='css/temp-style.css')}} rel="stylesheet">
+
+		<link rel="shortcut icon" href={{ url_static(filename='img/favicon.ico')}}>
+		<script src={{ url_static(filename='js/jquery.min.js')}}></script>
+		<script src={{ url_static(filename='js/bootstrap-dropdown.js')}}></script>
+		<script src={{ url_static(filename='js/bootstrap-alert.js')}}></script>
+	</head>
+	<body>
+		<div class="temp-content">
+			<div class="container">
+				<div class="row">
+					<div class="center minimal_logo span5">
+						<img src={{ url_static(filename='img/HalfBlackBackgroundWith4pxShadow.png')}} alt="" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="span5">
+						<h1 class="center">
+							The student art world is opening.
+						</h1>
+						<h2 class="center">
+							Be the first to catch a glimpse.
+						</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span5">
+						<form name="email-form" class="form-inline" action="" method="POST">
+							<div class="control-group form-center">
+								<input class="input-xlarge" id="iconInput" name="email" type="text" placeholder="Your email"/>
+								<input type="submit" class="btn btn-primary" name="submit" value="Notify Me!"/>
+							</div>
+						</form>
+					</div>
+				</div>
+				<script type="text/javascript" language="JavaScript">
+					document.forms['email-form'].elements['email'].focus();
+				</script>
+				<div class="row">
+					<div class="span5">
+						<h3 class="center">
+							No spam! We'll only tell you when we're ready.
+						</h3>
+					</div>
+				</div>
+				{%if success is defined%}
+					<div class='row'>
+						<div class='temp-alert alert alert-info'>
+						{% if success %}
+							Thank you, a message will to sent to <strong>{{email}}</strong> when OrigiArt is live.
+						{% else %}
+								<strong>{{email}}</strong> is already on our notification list.
+						{% endif %}
+						</div>
+					</div>
+				{% endif %}
+			</div>
+			<div class="temp-transparent"></div>
+		</div>
+	</body>
+</html>

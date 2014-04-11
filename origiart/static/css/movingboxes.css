@@ -1,0 +1,103 @@
+/*** Overall MovingBoxes Slider ***/
+.mb-wrapper {
+	margin: 0 auto;
+	position: relative;
+	left: 0;
+	top: 0;
+}
+
+/* Panel Wrapper */
+.mb-slider, .mb-scroll {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin: 0 auto;
+	padding: 0;
+	position: relative;
+	left: 0;
+	top: 0;
+
+	/***(>'-')> Control Panel Font size here <('-'<)***/
+	font-size: 18px;
+}
+
+/*** Slider panel ***/
+.mb-slider .mb-panel {
+	margin: 0px 20px 0px 20px;
+	padding: 0px;
+	display: block;
+	cursor: pointer;
+	float: left;
+	list-style: none;
+}
+.mb-slider .mb-panel a {
+	border:none;
+}
+.mb-slider .mb-panel a h2,.mb-slider .mb-panel a p {
+	display:none;
+}
+.mb-slider .mb-panel.current a h2,.mb-slider .mb-panel.current a p {
+	display:block;
+}
+.mb-inside * {
+	max-width: 100%;
+	text-align:center;
+}
+
+/*** Left & Right Navigation Arrows ***/
+a.mb-scrollButtons {
+	display: block;
+	width: 45px;
+	height: 58px;
+	background: transparent url(../img/arrows.png) no-repeat;
+	position: absolute;
+	top: 50%;
+	margin-top: -29px; /* if you change the arrow images, you may have to adjust this (1/2 height of arrow image) */
+	cursor: pointer;
+	text-decoration: none;
+	outline: 0;
+	border: 0;
+}
+a.mb-scrollButtons.mb-left {
+	background-position: left top;
+	left: -45px;
+}
+a.mb-scrollButtons.mb-right {
+	background-position: right top;
+	right: -45px;
+}
+a.mb-scrollButtons.mb-left:hover {
+	background-position: left bottom;
+}
+a.mb-scrollButtons.mb-right:hover {
+	background-position: right bottom;
+}
+a.mb-scrollButtons.disabled {
+	display: none;
+}
+
+/*** Controls added below the panels ***/
+.mb-controls {
+	margin: 0 auto;
+	text-align: center;
+	background: #ccc;
+	position: relative;
+	z-index: 100;
+}
+.mb-controls a {
+	color: #444;
+	font: 12px Georgia, Serif;
+	display: inline-block;
+	text-decoration: none;
+	padding: 2px;
+	height: 18px;
+	margin: 0 5px 0 0;
+	text-align: center;
+	outline: 0;
+}
+.mb-controls a.current, .mb-controls a:hover {
+	color: #fff;
+}
+.mb-active-slider .mb-controls {
+	background: #999bff;
+}

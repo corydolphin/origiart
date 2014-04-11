@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% set PAGENAME = artist.displayName%}
+{% block maincontent %}
+<div class="content" style="position:relative;">
+
+<div class="content">
+	<div class="row-fluid">
+		<div class="span3">
+			<div class="row-fluid">
+				<div class="span">
+					<img src={{artist.image}} alt=""/>
+					<p>
+						{{artist.username}}
+					</p>
+					<p>
+						{{artist.slogan or '"My slogan is silence"'}} {# TODO: implement smarter default #}
+					</p>
+					<p>
+						{{artist.description or '"Artist, human, etc"'}} {# TODO: implement smarter default #}
+					</p>
+					<p>
+						{{artist.location or '"In a galaxy far  far away"'}} {# TODO: implement smarter default #}
+					</p>
+
+					<button class="btn btn-primary">
+						<i class="icon-plus"></i>
+						Follow
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="span9">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span12">
+							<p class="pull-left">
+								Showing 32 results
+							</p>
+							<p class="pull-right">
+								Sort by 
+								<select id="select01">
+									<option>Recently Added</option>
+									<option>Popular Artists</option>
+									<option>Lowest Price</option>
+									<option>Highest Price</option>
+								</select>
+							</p>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span12">
+							{% for artwork in artist.artworks %}
+								<div class="pull-left" style="margin-right:20px;text-align:center;color:#666666;">
+									<a href={{artwork.link}}>
+										<img src={{artwork.imageThumb}} alt=""/>
+									</a>
+									<a href={{artwork.link}}>
+
+									<p>	
+										{{artwork.name}}
+									</p>
+									</a>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set PAGENAME = 'About'%}
+{% block maincontent %}
+
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				<ul class="nav nav-pills">
+					<li>
+						<a href={{url_for('about')}}>
+							About Us
+						</a>
+					</li>
+					<li class="active">
+						<a href={{url_for('contact')}}>
+							Contact Us
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="page-header">
+			<h1>
+				About Us
+			</h1>
+		</div>
+		<div class="row">
+			<div class="span12">
+				<p>
+					We believe that art is meant to be shared. We also believe that artists should be able 
+					to practice their craft and explore their interests and make a living doing so. That is 
+					why we created <a href={{url_for('index')}}>OrigiArt.com</a>, to help artists 
+					<em>sell themselves</em>.
+				</p>
+				<p>
+					Artists can use our website to begin selling their artwork and have a successful record 
+					when approaching galleries that they would like their art exhibited in. We also want 
+					people to take an active interest in the artist and their style, and our proud to offer 
+					a commosion option to our collectors.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

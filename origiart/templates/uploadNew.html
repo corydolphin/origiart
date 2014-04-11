@@ -1,0 +1,238 @@
+{% extends "base.html" %} {% set PAGENAME = "Upload" %} {% block css %}
+{{super()}}
+<style type="text/css">
+    .uploadfragment{ height:600px; }
+</style>
+{% endblock %}
+{% block js %}
+{{ super() }}
+
+<script>
+    $(function() {
+        $('input[type=file]').change(function(e){
+            if (this.files && this.files[0])
+            {
+                var reader = new FileReader();
+                reader.onload = function (oe) {
+                    $('#fileUploadClickable :first-child').css('background-image', 'url(' + oe.target.result + ')');
+                    $('#fileUploadClickable :first-child').css('background-color','');
+                    $('#fileUploadClickable h2').css('visibility','hidden');
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        $('#fileUploadClickable').click(function(){
+            $('#fileUploadInput').click();
+        });
+
+        var currentFragment = 1;
+        var numFrags = 3;
+        var fragTitles = ["Upload your creation", "Tell your story", "Make your demand", "Hanging it up"];
+
+        var switchTo = function(fragNum) {
+                $("#fragment" + (fragNum - 1)).first().css('display', 'none');
+                $("#fragment" + (fragNum + 1)).first().css('display', 'none');
+                $("#fragment" + fragNum).first().css('display', 'block')
+                currentFragment = fragNum;
+                changeButtons();
+                $('h1').first().text(fragTitles[currentFragment - 1]);
+            };
+        var nextFrag = function(event) {
+                if (event.srcElement.className.indexOf('disabled') !== -1) {
+                    return
+                }
+
+                switchTo(currentFragment + 1)
+            };
+        var prevFrag = function() {
+                if (event.srcElement.className.indexOf('disabled') !== -1) {
+                    return
+                }
+                switchTo(currentFragment - 1)
+            };
+        var changeButtons = function() {
+                if (currentFragment === numFrags) {
+                    $("#nextFragmentButton").first().addClass('disabled');
+                } else if (currentFragment === 1) {
+                    $("#prevFragmentButton").first().addClass('disabled');
+                } else {
+                    $("#prevFragmentButton").first().removeClass('disabled');
+                    $("#nextFragmentButton").first().removeClass('disabled');
+                }
+            };
+
+        $('#nextFragmentButton').on('click', nextFrag);
+        $('#prevFragmentButton').on('click', prevFrag);
+    });
+</script>
+{% endblock %} {% block maincontent %}
+<div class="content">
+    <div class="container">
+        <a name="first"></a>
+        <div class="page-header">
+            <h1>Upload your creation</h1>
+        </div>
+        <div class="row">
+            <div class="span7">
+                {% if errors %}
+                <div class='row7'>
+                    <div class='center temp-alert alert alert-info'>
+                        {% for error in errors %}
+                        <strong>{{error}}</strong>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <form class="form-horizontal well" action="" method="POST" enctype="multipart/form-data">
+                    <input id="fileUploadInput" name="artworkImage" type="file" style="display:none"/>
+                    <fieldset>
+                        <div class="uploadfragment" id="fragment1">
+                            <div class="control-group">
+                                <label class="control-label" for="fileUpload">Choose the picture</label>
+                                <div class="controls">
+                                    <div class="span3 thumbnail" id="fileUploadClickable" style="cursor: hand; cursor: pointer;">
+                                        <div style="width:220px; height:180px; background-color:#808080;  vertical-align: middle; text-align: center; display: table-cell;background-size:cover;background-repeat:no-repeat;">
+                                            <h2 style="display: inline-block">Your Masterpiece</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="normalSelect">Title</label>
+                                <div class="controls">
+                                    <input class="input-xlarge" id="" name="title" value="" type="text" />
+                                    <p class="help-block">
+                                        Enter the title of your piece. For example, "A Day in the Woods", "Untitled".
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="normalSelect">Type</label>
+                                <div class="controls">
+                                    <select style="width:281px;" name="type" id="normalSelect">
+                                        <option></option>
+                                        {% for type in types %}
+                                        <option value="{{type.id}}">{{type.name | title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <p class="help-block">Select what type of artwork your piece is.</p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" id="optionsRadio">Medium</label>
+                                <div class="controls">
+                                    <select style="width:281px;" name="type" id="normalSelect">
+                                        <option></option>
+                                        {% for medium in mediums %}
+                                        <option value="{{medium.id}}">{{medium.name | title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <p class="help-block">Select the medium you used for your piece.</p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="normalSelect">Support type</label>
+                                <div class="controls">
+                                    <select style="width:281px;" name="support_type" id="normalSelect">
+                                        <option></option>
+                                        {% for support in supports %}
+                                        <option value="{{support.id}}">{{support.name | title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <p class="help-block">Select the support type your artwork is on.</p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="normalSelect">Style</label>
+                                <div class="controls">
+                                    <select style="width:281px;" name="style" id="normalSelect">
+                                        <option></option>
+                                        {% for style in styles %}
+                                        <option value="{{style.id}}">{{style.name | title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <p class="help-block">Select the style in which you created your piece.</p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="prependedInput">Width</label>
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <input style="width:223px;" id="prependedInput" name="width" value=""
+                                        size="16" type="text" />
+                                        <span class="add-on">inches</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="prependedInput">Height</label>
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <input style="width:223px;" id="prependedInput" name="height" value="" size="16" type="text" />
+                                        <span class="add-on">inches</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end fragment1 -->
+                        <div class="uploadfragment" id="fragment2" style="display:none">
+                            <div class="control-group">
+                                <label class="control-label" for="normalSelect">Description</label>
+                                <div class="controls">
+                                    <textarea class="input-xlarge" name="description" id="textarea" rows="3"></textarea>
+                                    <p class="help-block">
+                                        Enter your decription of your piece, this is a good opportunity for collectors to understand more about your unique perspective.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="normalSelect">Tags</label>
+                                <div class="controls">
+                                    <input class="input-xlarge" id="" name="tags" value="" type="text" />
+                                    <p class="help-block">
+                                        Enter as many tags for your piece as you would like. This will help collectors find your piece.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uploadfragment" id="fragment3" style="display:none">
+                            <div class="control-group">
+                                <label class="control-label" for="normalSelect">Is your work framed?</label>
+                                <div class="controls">
+                                    <select style="width:281px;" name="framed" id="normalSelect">
+                                        <option></option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="prependedInput">Price</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <span class="add-on">USD</span>
+                                        <input style="width:234px;" id="prependedInput" name="cost" size="16" value="" type="text" />
+                                    </div>
+                                    <p class="help-block">Enter the price of your piece.</p>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <input type="submit" action="" name="submit" class="btn btn-primary" value="Upload"/>
+                            </div>
+                        </div>
+                        <div class="btn btn-primary pull-right" id="nextFragmentButton">
+                            Next
+                        </div>
+                        <div class="btn pull-left disabled" id="prevFragmentButton">
+                            Previous
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="span4">
+                <h2>Something cool here</h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
